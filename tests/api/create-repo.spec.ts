@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('POST /user/repos', () => {
   test('POST /user/repos creates repository', async ({ request }) => {
-    const repoName = `test-repo-${Date.now()}`;
+    const repoName = `test-repo-${Date.now()}-${Math.random().toString(36).substring(7)}`;
     let repoCreated = false;
 
     try {
@@ -41,7 +41,7 @@ test.describe('POST /user/repos', () => {
   });
 
   test('POST /user/repos with duplicate name returns 422', async ({ request }) => {
-    const repoName = `test-duplicate-${Date.now()}`;
+    const repoName = `test-repo-${Date.now()}-${Math.random().toString(36).substring(7)}`;
     let repoCreated = false;
 
     try {
