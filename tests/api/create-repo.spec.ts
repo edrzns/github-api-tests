@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('POST /user/repos', () => {
   test('POST /user/repos creates repository', async ({ request }) => {
     const repoName = `test-repo-${Date.now()}`;
+    let repoCreated = false;
 
     try {
       const response = await request.post('/user/repos', {
@@ -13,6 +14,7 @@ test.describe('POST /user/repos', () => {
         },
       });
 
+      repoCreated = response.status() === 201;
       expect(response.status()).toBe(201);
 
       const repo = await response.json();
@@ -32,18 +34,22 @@ test.describe('POST /user/repos', () => {
       expect(new Date(repo.created_at).getTime()).toBeGreaterThan(Date.now() - 5000);
       expect(repo.url).toContain(repoName);
     } finally {
-      await request.delete(`/repos/${process.env.GITHUB_USERNAME}/${repoName}`);
+      if (repoCreated) {
+        await request.delete(`/repos/${process.env.GITHUB_USERNAME}/${repoName}`);
+      }
     }
   });
 
   test('POST /user/repos with duplicate name returns 422', async ({ request }) => {
     const repoName = `test-duplicate-${Date.now()}`;
+    let repoCreated = false;
 
     try {
       // First creation - should succeed
       const firstResponse = await request.post('/user/repos', {
         data: { name: repoName, private: true },
       });
+      repoCreated = firstResponse.status() === 201;
       expect(firstResponse.status()).toBe(201);
 
       // Second creation - should fail
@@ -59,7 +65,9 @@ test.describe('POST /user/repos', () => {
       expect(error.errors[0].message).toBe('name already exists on this account');
       expect(error.status).toBe('422');
     } finally {
-      await request.delete(`/repos/${process.env.GITHUB_USERNAME}/${repoName}`);
+      if (repoCreated) {
+        await request.delete(`/repos/${process.env.GITHUB_USERNAME}/${repoName}`);
+      }
     }
   });
 
