@@ -36,5 +36,7 @@ test.describe('GET /user', () => {
     const error = await response.json();
 
     expect(error.message).toBe('Bad credentials');
+    expect(error.documentation_url).toBe('https://docs.github.com/rest');
+    expect(error.status).toBe('401');
   });
 });
