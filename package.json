@@ -1,0 +1,24 @@
+{
+  "name": "github-api-tests",
+  "version": "1.0.0",
+  "description": "Small Playwright test suite to validate GitHub REST API.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edrzns/github-api-tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edrzns/github-api-tests/issues"
+  },
+  "homepage": "https://github.com/edrzns/github-api-tests#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.9.1",
+    "dotenv": "^17.2.3",
+    "prettier": "^3.6.2"
+  }
+}
