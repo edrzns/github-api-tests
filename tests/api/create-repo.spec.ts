@@ -11,12 +11,10 @@ test('POST /user/repos creates repository', async ({ request }) => {
     },
   });
 
-  expect(response.status()).toBe(201); // Created
+  expect(response.status()).toBe(201);
 
   const repo = await response.json();
 
-  // What should you assert here?
-  // Think: what proves the repo was created correctly?
   expect(repo.name).toBe(repoName);
   expect(repo.owner.login).toBe(process.env.GITHUB_USERNAME);
 
