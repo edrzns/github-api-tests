@@ -14,16 +14,13 @@ test('GET /user with auth', async ({ request }) => {
 
   const user = await response.json();
 
-  // Verify it's YOUR user (most important)
   expect(user.login).toBe(githubUser);
   expect(user.id).toBe(githubId);
 
-  // Verify optional email if present
   if (user.email) {
     expect(user.email).toContain('@');
   }
 
-  // Type safety for fields you don't know exact values
   expect(typeof user.created_at).toBe('string');
   expect(typeof user.public_repos).toBe('number');
 });
