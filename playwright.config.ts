@@ -29,7 +29,6 @@ export default defineConfig({
     baseURL: 'https://api.github.com',
     extraHTTPHeaders: {
       'Accept': 'application/vnd.github.v3+json',
-      'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`
     },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -38,10 +37,11 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    { name: 'api' }
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
 
     // {
     //   name: 'firefox',
