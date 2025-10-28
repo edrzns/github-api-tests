@@ -29,6 +29,7 @@ export default defineConfig({
     baseURL: 'https://api.github.com',
     extraHTTPHeaders: {
       'Accept': 'application/vnd.github.v3+json',
+      'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
     },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */

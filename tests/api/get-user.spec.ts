@@ -1,21 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 test('GET /user with auth', async ({ request }) => {
-  const githubUser = 'edrzns';
-  const githubId = 23223089;
 
-  const response = await request.get('/user', {
-    headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-    },
-  });
+  const response = await request.get('/user');
 
   expect(response.status()).toBe(200);
 
   const user = await response.json();
 
-  expect(user.login).toBe(githubUser);
-  expect(user.id).toBe(githubId);
+  expect(user.login).toBe(process.env.GITHUB_USERNAME);
+  expect(user.id).toBe(Number(process.env.GITHUB_USER_ID));
 
   if (user.email) {
     expect(user.email).toContain('@');
