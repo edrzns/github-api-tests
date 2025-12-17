@@ -36,14 +36,20 @@ This document contains the functional and non-functional test cases for the GitH
 * **Priority:** P2 (Major)
 * **Objective:** Ensure the API prevents name collisions.
 * **Preconditions:**
-    1. A repository named `duplicate-test-repo` already exists.
+    1. Valid `GITHUB_TOKEN` provided in environment.
 * **Test Steps:**
-    1. Send `POST` request to `/user/repos` with `name: "duplicate-test-repo"`.
+    1. Generate unique repository name `test-duplicate-${UUID}`.
+    2. Send `POST` request to `/user/repos` with generated name.
+    3. Verify response status is `201 Created`.
+    4. Send second `POST` request to `/user/repos` with same name.
+    5. Verify response status is `422 Unprocessable Entity`.
 * **Expected Results:**
-    1. System returns `422 Unprocessable Entity`.
-    2. Response body contains: `"message": "Repository creation failed."`.
-    3. Error array includes: `"message": "name already exists on this account"`.
-* **Post-conditions:** None.
+    1. First request (Step 2) succeeds with `201 Created`.
+    2. Second request (Step 4) fails with `422 Unprocessable Entity`.
+    3. Error response contains: `"message": "Repository creation failed."`.
+    4. Error array includes: `"message": "name already exists on this account"`.
+* **Post-conditions:**
+    1. Delete the created repository via `DELETE /repos/{owner}/{name}`.
 
 ---
 
