@@ -51,6 +51,22 @@ This document contains the functional and non-functional test cases for the GitH
 * **Post-conditions:**
     1. Delete the created repository via `DELETE /repos/{owner}/{name}`.
 
+### TC-REPO-003: Verify Error When Repository Name is Missing
+* **Traceability:** REQ-REPO-01
+* **Priority:** P2 (Major)
+* **Objective:** Validate that the API enforces required field validation.
+* **Preconditions:**
+    1. Valid `GITHUB_TOKEN` provided in environment.
+* **Test Steps:**
+    1. Send `POST` request to `/user/repos` with payload containing only `description` and `private` fields.
+    2. Verify `name` field is not included in the request body.
+* **Expected Results:**
+    1. System returns `422 Unprocessable Entity`.
+    2. Error response contains message referencing the `name` field requirement.
+    3. Error response contains `"status": "422"`.
+* **Post-conditions:**
+    1. No repository is created.
+
 ---
 
 ## 3. Module: Issue Management (REQ-ISSUE)
