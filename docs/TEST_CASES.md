@@ -76,19 +76,24 @@ This document contains the functional and non-functional test cases for the GitH
 * **Priority:** P1 (Critical)
 * **Objective:** Validate the state transition of an issue from creation to resolution.
 * **Preconditions:**
-    1. A test repository exists.
+    1. Valid `GITHUB_TOKEN` provided in environment.
 * **Test Steps:**
-    1. Send `POST` to `/repos/{owner}/{repo}/issues` with title "Automated Bug".
-    2. Capture `issue_number`.
-    3. Send `PATCH` to `/repos/{owner}/{repo}/issues/{issue_number}` with `{ "state": "closed" }`.
-    4. Send `GET` to the issue endpoint to verify final state.
+    1. Generate unique repository name using `test-issue-repo-${timestamp}-${random}` pattern.
+    2. Send `POST` request to `/user/repos` to create a test repository.
+    3. Verify repository creation returns `201 Created`.
+    4. Send `POST` to `/repos/{owner}/{repo}/issues` with title "Automated Bug Test".
+    5. Capture `issue_number` from response.
+    6. Verify issue creation returns `201 Created`.
+    7. Send `PATCH` to `/repos/{owner}/{repo}/issues/{issue_number}` with `{ "state": "closed" }`.
+    8. Verify state update returns `200 OK`.
+    9. Send `GET` to `/repos/{owner}/{repo}/issues/{issue_number}` to verify final state.
 * **Expected Results:**
-    1. Step 1 returns `201 Created`.
-    2. Step 3 returns `200 OK`.
-    3. Step 4 response shows `"state": "closed"` and `"state_reason": "completed"`.
-* **Post-conditions:** None (Issues cannot be deleted via API, only locked/closed).
-
-
+    1. Repository creation (Step 2) succeeds with `201 Created`.
+    2. Issue creation (Step 4) succeeds with `201 Created`.
+    3. Issue update (Step 7) succeeds with `200 OK`.
+    4. Issue retrieval (Step 9) shows `"state": "closed"` and `"state_reason": "completed"`.
+* **Post-conditions:** 
+    1. Delete the test repository via `DELETE /repos/{owner}/{name}`
 
 ---
 
