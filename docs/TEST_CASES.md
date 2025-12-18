@@ -94,15 +94,30 @@ This document contains the functional and non-functional test cases for the GitH
 
 ## 4. Module: Security & Authentication
 
-### TC-AUTH-001: Verify Unauthorized Access Rejection
+### TC-AUTH-001: Verify Unauthorized Access Rejection (No Token)
 * **Traceability:** REQ-AUTH-01
 * **Priority:** P1 (Critical)
-* **Objective:** Ensure the API enforces authentication.
+* **Objective:** Ensure the API enforces authentication when no token is provided.
 * **Preconditions:**
-    1. No `Authorization` header provided.
+    1. No `Authorization` header provided in request.
 * **Test Steps:**
-    1. Send `GET` request to `/user/repos`.
+    1. Send `GET` request to `/user` without any `Authorization` header.
 * **Expected Results:**
     1. System returns `401 Unauthorized`.
     2. Response body contains `"message": "Requires authentication"`.
+* **Post-conditions:** None.
+
+### TC-AUTH-002: Verify Invalid Token Rejection
+* **Traceability:** REQ-AUTH-01
+* **Priority:** P1 (Critical)
+* **Objective:** Ensure the API rejects requests with invalid authentication tokens.
+* **Preconditions:**
+    1. Invalid `Authorization` token is used.
+* **Test Steps:**
+    1. Send `GET` request to `/user` with header `Authorization: Bearer invalid-token-12345`.
+* **Expected Results:**
+    1. System returns `401 Unauthorized`.
+    2. Response body contains `"message": "Bad credentials"`.
+    3. Response body contains `"documentation_url": "https://docs.github.com/rest"`.
+    4. Response body contains `"status": "401"`.
 * **Post-conditions:** None.
