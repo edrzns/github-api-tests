@@ -26,7 +26,7 @@ export default defineConfig({
   workers: 1,
 
   // HTML reporter for test results
-  reporter: [['list'], ['html']],
+  reporter: process.env.CI ? 'dot' : [['list'], ['html', { open: 'never' }]],
 
   // Global timeout for each test
   timeout: 30000,
