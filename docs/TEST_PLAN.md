@@ -61,16 +61,16 @@ Testing cannot commence until:
 
 ### 6.2 Exit Criteria (Definition of Done)
 Testing is considered complete when:
-1.  [ ] **100%** of Critical (P1) test cases pass.
-2.  [ ] **90%** of Major (P2) test cases pass.
+1.  [ ] **100%** of Critical (P1) test cases pass (4 out of 4: TC-REPO-001, TC-ISSUE-001, TC-AUTH-001, TC-AUTH-002).
+2.  [ ] **90%** of Major (P2) test cases pass (2 out of 2: TC-REPO-002, TC-REPO-003).
 3.  [ ] No "Blocking" defects remain open.
 4.  [ ] Test Execution Report is generated and archived.
+5.  [ ] All test cases documented in `TEST_CASES.md` have corresponding implementation entries in `TEST_MAPPING.md`.
 
-## 7. Risks & Mitigation
 | Risk | Probability | Impact | Mitigation |
 | :--- | :--- | :--- | :--- |
 | **API Rate Limiting** | High | Blocked Tests | Implement 1000ms delay between tests; use mock data for non-critical reads. |
-| **Residual Data** | Medium | Account Bloat | `afterAll` hook implemented to delete all resources created during execution. |
+| **Residual Data** | Medium | Account Bloat | `afterEach` hook implemented to track and delete all resources created during each test execution. |
 
 ## 8. Deliverables
 1.  Test Plan Document (`/docs/TEST_PLAN.md`).
