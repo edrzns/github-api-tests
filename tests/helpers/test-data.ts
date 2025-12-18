@@ -30,3 +30,14 @@ export function generateIssueTitle(prefix: string = 'Test Issue'): string {
   const timestamp = Date.now();
   return `${prefix} - ${timestamp}`;
 }
+
+/**
+ * Generates a unique issue body text for testing
+ * 
+ * @param description - Optional custom description (default: 'This is an automated test issue')
+ * @returns Issue body text with timestamp
+ */
+export function generateIssueBody(description: string = 'This is an automated test issue'): string {
+  const timestamp = new Date().toISOString();
+  return `${description}\n\nGenerated at: ${timestamp}`;
+}
